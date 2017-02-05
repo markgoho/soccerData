@@ -1,0 +1,11 @@
+<div *ngIf="!teams">
+  <div>You have no teams. Create one now!</div>
+  <label for="teamName">Team Name: </label>
+  <input type="text" id="teamName" #name>
+  <button class="button" type="submit" (click)="addTeam(name.value)">Add Team</button>
+</div>
+
+<div *ngIf="teams">
+  <h2>Select a team to being keeping score</h2>
+  <button *ngFor="let team of teams | async" class="button" [routerLink]="team.$key">{{ team.name }}</button>
+</div>

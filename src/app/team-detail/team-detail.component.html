@@ -1,0 +1,18 @@
+<h2>{{ (team | async)?.name }}</h2>
+
+<div *ngIf="!players">
+  <div>You have no players on {{ (team | async)?.name }}. Create one now!</div>
+</div>
+
+<div *ngIf="players">
+  <h2>Select a team to being keeping score</h2>
+  <button *ngFor="let team of teams | async" class="button" [routerLink]="team.$key">{{ team.name }}</button>
+</div>
+
+
+<div>
+  <label for="teamName">Player Name: </label>
+  <input type="text" id="teamName" #name>
+  <button class="button" type="submit" (click)="addPlayer(name.value)">Add Player</button>
+</div>
+
