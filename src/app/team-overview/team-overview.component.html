@@ -6,6 +6,6 @@
 </div>
 
 <div *ngIf="teams">
-  <h2>Select a team to being keeping score</h2>
+  <h4>Select a team to begin keeping score</h4>
   <button *ngFor="let team of teams | async" class="button" [routerLink]="team.$key">{{ team.name }}</button>
 </div>

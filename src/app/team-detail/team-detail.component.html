@@ -4,15 +4,36 @@
   <div>You have no players on {{ (team | async)?.name }}. Create one now!</div>
 </div>
 
-<div *ngIf="players">
-  <h2>Select a team to being keeping score</h2>
-  <button *ngFor="let team of teams | async" class="button" [routerLink]="team.$key">{{ team.name }}</button>
-</div>
+<div *ngIf="players" class="container">
+  <table class="hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Games</th>
+        <th>Goals</th>
+        <th>Assists</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let player of players | async">
+        <td>{{player.name}}</td>
+        <td>{{player.games}}</td>
+        <td>{{player.goals}}</td>
+        <td>{{player.assists}}</td>
+        <td>
+          <button [routerLink]="['player', player.$key]" class="button">Info</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
 <div>
   <label for="teamName">Player Name: </label>
-  <input type="text" id="teamName" #name>
-  <button class="button" type="submit" (click)="addPlayer(name.value)">Add Player</button>
+  <form #newPlayer>
+    <input type="text" id="teamName" #name>
+    <button class="button" type="submit" (click)="addPlayer(name.value); newPlayer.reset()">Add Player</button>
+  </form>
 </div>
 

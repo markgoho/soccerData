@@ -28,25 +28,16 @@ export class TeamDetailComponent implements OnInit {
 
   ngOnInit() {
     this.team = this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}`);
-    this.af.database.object(`/${this.name.auth.uid}/players/${this.teamId}`)
-      .subscribe(data => {
-        if (data.$value !== null) {
-          this.players = this.af.database.list(`/${this.name.auth.uid}/players`);
-        }
-      });
+    this.players = this.af.database.list(`/${this.name.auth.uid}/teams/${this.teamId}/players`);
   }
 
   addPlayer(name: string) {
     const player = {
       name
     }
-    const playerRef = this.af.database.list(`/${this.name.auth.uid}/players`, { preserveSnapshot: true}).push(player).key;
-    const playerUpdate = {
-      playerRef: true
-    }
-    this.af.database.object(`/${this.name.auth.uid}/playersPerTeam/${this.teamId}`).update({
-      playerRef: true
-    });
+    this.players.push(player);
   }
+
+  
 
 }

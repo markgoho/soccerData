@@ -1,3 +1,27 @@
+// .loading {
+//   width: 30px;
+//   height: 30px;
+//   border: 5px solid #ccc;
+//   position: fixed;
+//   left: 50%;
+//   margin-left: -20px;
+//   top: 50%;
+//   margin-top: -20px;
+//   border-radius: 50%;
+// }
+
+
+// .loading:after {
+//   content: '';
+//   position: absolute;
+//   width: 40px;
+//   height: 10px;
+//   background: #E2E4E6;
+//   top: 10px;
+//   left: -5px;
+//   animation: spin 1.2s infinite;
+// }
+
 #lock {
     width:40%;
     margin: 1.5em auto 4em auto;
@@ -19,6 +43,13 @@
 #email {
     background: #ECECEC  url('assets/images/email.svg') no-repeat 25px;
     background-size: 25px;
+}
+
+
+@media (max-width: 600px) {
+    button {
+        font-size:1em;
+    }
 }
 
 @media (max-width: 600px) {

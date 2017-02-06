@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire, AuthProviders, AuthMethods, FirebaseListObservable } from 'angularfire2';
 import { Router } from '@angular/router';
-import { moveIn, fallIn, moveInLeft } from '../router.animations';
 
 @Component({
-  selector: 'app-members',
+  selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
-  animations: [moveIn(), fallIn(), moveInLeft()],
-  host: {'[@moveIn]': ''}
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
   teams: FirebaseListObservable<any>;
