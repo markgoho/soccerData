@@ -11,6 +11,7 @@ import { moveIn, fallIn, moveInLeft } from '../router.animations';
 export class TeamOverviewComponent implements OnInit {
   teams;
   name;
+  
   constructor(public af: AngularFire) {
     this.af.auth.subscribe(auth => {
       if(auth) {
@@ -28,11 +29,14 @@ export class TeamOverviewComponent implements OnInit {
       });
   }
 
-   addTeam(name: string) {
+  addTeam(name: string) {
     const team = {
       name
     };
-    this.af.database.list(`/${this.name.auth.uid}/teams`).push(team);
+    const teamKey = this.af.database.list(`teams`).push(team).key;
+    const userTeam = {};
+    userTeam[teamKey] = true;
+    this.af.database.object(`users/${this.name.auth.uid}/teams/`).update(userTeam);
   }
 
 }

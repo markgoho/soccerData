@@ -19,7 +19,6 @@ export class DashboardComponent implements OnInit {
         this.name = auth;
       }
     });
-
   }
 
   logout() {
@@ -28,7 +27,17 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-  
+    // Add user to db if user doesn't exist already
+    this.af.database.object(`/users/${this.name.auth.uid}`)
+      .subscribe(data => {
+        if (data.$value === null) {
+          this.af.database.object(`/users/${this.name.auth.uid}`).update({
+            name: this.name.auth.displayName,
+            email: this.name.auth.email,
+            avatar: this.name.auth.photoURL
+          })
+        }
+      });
   }
 
 }

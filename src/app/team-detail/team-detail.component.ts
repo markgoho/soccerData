@@ -34,6 +34,9 @@ export class TeamDetailComponent implements OnInit {
   addPlayer(name: string) {
     const player = {
       name,
+      assists: 0,
+      games: 0,
+      goals: 0,
       createdOn: new Date().toString()
     }
     this.players.push(player);

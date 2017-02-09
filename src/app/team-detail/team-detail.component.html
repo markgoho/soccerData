@@ -6,20 +6,19 @@
 
 <div *ngIf="players" class="container">
   <div class="col">
-    <table class="hover">
-      <thead>
+    <table class="table hover table-striped">
+      <thead class="thead-inverse">
         <tr>
           <th>Name</th>
           <th>Games</th>
           <th>Goals</th>
           <th>Assists</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let player of players | async">
           <td>
-            {{player.name}}
+            <a [routerLink]="['player', player.$key]">{{player.name}}</a>
           </td>
           <td>
             <button (click)="incGames(player.$key)">+</button>
@@ -35,9 +34,6 @@
             <button (click)="incAssists(player.$key)">+</button>
             {{player.assists}}
             <button (click)="decAssists(player.$key)">-</button>
-          </td>
-          <td>
-            <button [routerLink]="['player', player.$key]" class="button">Info</button>
           </td>
         </tr>
       </tbody>
