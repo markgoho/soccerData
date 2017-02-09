@@ -5,28 +5,44 @@
 </div>
 
 <div *ngIf="players" class="container">
-  <table class="hover">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Games</th>
-        <th>Goals</th>
-        <th>Assists</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let player of players | async">
-        <td>{{player.name}}</td>
-        <td>{{player.games}}</td>
-        <td>{{player.goals}}</td>
-        <td>{{player.assists}}</td>
-        <td>
-          <button [routerLink]="['player', player.$key]" class="button">Info</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="col">
+    <table class="hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Games</th>
+          <th>Goals</th>
+          <th>Assists</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of players | async">
+          <td>
+            {{player.name}}
+          </td>
+          <td>
+            <button (click)="incGames(player.$key)">+</button>
+            {{player.games}}
+            <button (click)="decGames(player.$key)">-</button>
+          </td>
+          <td>
+            <button (click)="incGoals(player.$key)">+</button>
+            {{player.goals}}
+            <button (click)="decGoals(player.$key)">-</button>
+          </td>
+          <td>
+            <button (click)="incAssists(player.$key)">+</button>
+            {{player.assists}}
+            <button (click)="decAssists(player.$key)">-</button>
+          </td>
+          <td>
+            <button [routerLink]="['player', player.$key]" class="button">Info</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 
 <div>

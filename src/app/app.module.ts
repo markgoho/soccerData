@@ -15,6 +15,7 @@ import { AuthGuard } from './auth/auth-guard.service';
 import { routes } from './app.routes';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
 import { TeamOverviewComponent } from './team-overview/team-overview.component';
+import { PlayerDetailComponent } from './player/player-detail/player-detail.component';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCbQly5j-7FLwCoQEuhKgHENqDchtQPbxo",
@@ -33,6 +34,7 @@ export const firebaseConfig = {
     DashboardComponent,
     TeamDetailComponent,
     TeamOverviewComponent,
+    PlayerDetailComponent,
   ],
   imports: [
     BrowserModule,

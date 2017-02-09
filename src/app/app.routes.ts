@@ -9,6 +9,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { EmailComponent } from './auth/email/email.component';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
 import { TeamOverviewComponent } from './team-overview/team-overview.component';
+import { PlayerDetailComponent } from './player/player-detail/player-detail.component';
 
 export const router: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -27,7 +28,8 @@ export const router: Routes = [
         {
           path: ':team',
           component: TeamDetailComponent
-        }
+        },
+        { path: ':team/player/:playerId', component: PlayerDetailComponent }
       ]
     }
 ]
