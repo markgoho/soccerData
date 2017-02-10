@@ -4,9 +4,9 @@
   <div>You have no players on {{ team | async)?.name }}. Create one now!</div>
 </div>-->
 
-<div *ngIf="players" class="container">
+<div *ngIf="teamPlayers" class="container">
   
-  <!--<div class="col">
+  <div class="col">
     
     <table class="table hover table-striped">
       <thead class="thead-inverse">
@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let player of players">
+        <tr *ngFor="let player of teamPlayers | async">
           <td>
             <a [routerLink]="['player', player.$key]">{{player.name}}</a>
           </td>
@@ -42,7 +42,7 @@
     </table>
 
 
-  </div>-->
+  </div>
 
   <div>
     <label for="teamName">Player Name: </label>

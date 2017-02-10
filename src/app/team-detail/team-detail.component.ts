@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFire, AuthProviders, AuthMethods, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Router, ActivatedRoute } from '@angular/router';
 import { moveIn, fallIn, moveInLeft } from '../router.animations';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-team-detail',
@@ -10,9 +11,11 @@ import { moveIn, fallIn, moveInLeft } from '../router.animations';
 })
 export class TeamDetailComponent implements OnInit {
   name;
-  players: FirebaseListObservable<any[]>;
+  allPlayers: FirebaseListObservable<any[]>;
+  teamPlayers: Observable<any>;
   teamId: string;
   team: FirebaseObjectObservable<any>;
+  teamName: string;
 
   constructor(private af: AngularFire, private route: ActivatedRoute) {
     this.af.auth.subscribe(auth => {
@@ -26,13 +29,14 @@ export class TeamDetailComponent implements OnInit {
     });
 
     this.team = this.af.database.object(`teams/${this.teamId}`);
-
-    this.players = this.af.database.list('/players');
-   
+    this.allPlayers = this.af.database.list('/players');
+    this.team.subscribe(team => this.teamName = team.name);
   }
 
   ngOnInit() {
-    this.team.subscribe(team => console.log(team.name));
+    this.teamPlayers = this.allPlayers.map(players => {
+      return players.filter(player => player.team === this.teamName);
+    });
   }
 
   addPlayer(name: string) {
@@ -41,52 +45,53 @@ export class TeamDetailComponent implements OnInit {
       assists: 0,
       games: 0,
       goals: 0,
+      team: this.teamName,
       createdOn: new Date().toString(),
     }
-    this.players.push(player);
+    this.allPlayers.push(player);
   }
 
-  incGames(key: string) {
-    let currentGames: number;
-    this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}/players/${key}/games`).subscribe(data => currentGames = data.$value || 0);
-    currentGames += 1;
-    this.players.update(key, { games: currentGames});
-  }
+  // incGames(key: string) {
+  //   let currentGames: number;
+  //   this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}/players/${key}/games`).subscribe(data => currentGames = data.$value || 0);
+  //   currentGames += 1;
+  //   this.players.update(key, { games: currentGames});
+  // }
 
-  decGames(key: string) {
-    let currentGames: number;
-    this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}/players/${key}/games`).subscribe(data => currentGames = data.$value || 0);
-    currentGames -= 1;
-    this.players.update(key, { games: currentGames});
-  }
+  // decGames(key: string) {
+  //   let currentGames: number;
+  //   this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}/players/${key}/games`).subscribe(data => currentGames = data.$value || 0);
+  //   currentGames -= 1;
+  //   this.players.update(key, { games: currentGames});
+  // }
 
-  incGoals(key: string) {
-    let currentGoals: number;
-    this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}/players/${key}/goals`).subscribe(data => currentGoals = data.$value || 0);
-    currentGoals += 1;
-    this.players.update(key, { goals: currentGoals});
-  }
+  // incGoals(key: string) {
+  //   let currentGoals: number;
+  //   this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}/players/${key}/goals`).subscribe(data => currentGoals = data.$value || 0);
+  //   currentGoals += 1;
+  //   this.players.update(key, { goals: currentGoals});
+  // }
 
-  decGoals(key: string) {
-    let currentGoals: number;
-    this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}/players/${key}/goals`).subscribe(data => currentGoals = data.$value || 0);
-    currentGoals -= 1;
-    this.players.update(key, { goals: currentGoals});
-  }
+  // decGoals(key: string) {
+  //   let currentGoals: number;
+  //   this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}/players/${key}/goals`).subscribe(data => currentGoals = data.$value || 0);
+  //   currentGoals -= 1;
+  //   this.players.update(key, { goals: currentGoals});
+  // }
 
-  incAssists(key: string) {
-    let currentAssists: number;
-    this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}/players/${key}/assists`).subscribe(data => currentAssists = data.$value || 0);
-    currentAssists += 1;
-    this.players.update(key, { assists: currentAssists});
-  }
+  // incAssists(key: string) {
+  //   let currentAssists: number;
+  //   this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}/players/${key}/assists`).subscribe(data => currentAssists = data.$value || 0);
+  //   currentAssists += 1;
+  //   this.players.update(key, { assists: currentAssists});
+  // }
 
-  decAssists(key: string) {
-    let currentAssists: number;
-    this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}/players/${key}/assists`).subscribe(data => currentAssists = data.$value || 0);
-    currentAssists -= 1;
-    this.players.update(key, { assists: currentAssists});
-  }
+  // decAssists(key: string) {
+  //   let currentAssists: number;
+  //   this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}/players/${key}/assists`).subscribe(data => currentAssists = data.$value || 0);
+  //   currentAssists -= 1;
+  //   this.players.update(key, { assists: currentAssists});
+  // }
 
   
 
