@@ -10,7 +10,7 @@ import { moveIn, fallIn, moveInLeft } from '../router.animations';
 })
 export class TeamDetailComponent implements OnInit {
   name;
-  players: FirebaseListObservable<any>;
+  players: FirebaseListObservable<any[]>;
   teamId: string;
   team: FirebaseObjectObservable<any>;
 
@@ -32,7 +32,7 @@ export class TeamDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.team.subscribe(team => console.log(team.name))
+    this.team.subscribe(team => console.log(team.name));
   }
 
   addPlayer(name: string) {
