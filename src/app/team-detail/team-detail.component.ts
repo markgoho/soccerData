@@ -24,11 +24,15 @@ export class TeamDetailComponent implements OnInit {
     route.params.subscribe((param: any) => {
       this.teamId = param['team'];
     });
+
+    this.team = this.af.database.object(`teams/${this.teamId}`);
+
+    this.players = this.af.database.list('/players');
+   
   }
 
   ngOnInit() {
-    this.team = this.af.database.object(`/${this.name.auth.uid}/teams/${this.teamId}`);
-    this.players = this.af.database.list(`/${this.name.auth.uid}/teams/${this.teamId}/players`);
+    this.team.subscribe(team => console.log(team.name))
   }
 
   addPlayer(name: string) {
@@ -37,7 +41,7 @@ export class TeamDetailComponent implements OnInit {
       assists: 0,
       games: 0,
       goals: 0,
-      createdOn: new Date().toString()
+      createdOn: new Date().toString(),
     }
     this.players.push(player);
   }

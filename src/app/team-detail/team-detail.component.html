@@ -1,11 +1,13 @@
 <h2>{{ (team | async)?.name }}</h2>
 
-<div *ngIf="!players">
-  <div>You have no players on {{ (team | async)?.name }}. Create one now!</div>
-</div>
+<!--<div *ngIf="!players">
+  <div>You have no players on {{ team | async)?.name }}. Create one now!</div>
+</div>-->
 
 <div *ngIf="players" class="container">
-  <div class="col">
+  
+  <!--<div class="col">
+    
     <table class="table hover table-striped">
       <thead class="thead-inverse">
         <tr>
@@ -16,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let player of players | async">
+        <tr *ngFor="let player of players">
           <td>
             <a [routerLink]="['player', player.$key]">{{player.name}}</a>
           </td>
@@ -38,14 +40,16 @@
         </tr>
       </tbody>
     </table>
+
+
+  </div>-->
+
+  <div>
+    <label for="teamName">Player Name: </label>
+    <form #newPlayer>
+      <input type="text" id="teamName" #name>
+      <button class="button" type="submit" (click)="addPlayer(name.value); newPlayer.reset()">Add Player</button>
+    </form>
   </div>
 
-
-<div>
-  <label for="teamName">Player Name: </label>
-  <form #newPlayer>
-    <input type="text" id="teamName" #name>
-    <button class="button" type="submit" (click)="addPlayer(name.value); newPlayer.reset()">Add Player</button>
-  </form>
 </div>
-

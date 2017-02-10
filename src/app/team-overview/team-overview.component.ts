@@ -21,18 +21,19 @@ export class TeamOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.af.database.object(`/${this.name.auth.uid}/teams`)
-      .subscribe(data => {
-        if (data.$value !== null) {
-          this.teams = this.af.database.list(`/${this.name.auth.uid}/teams`);
+      this.af.database.list(`teams`, {
+        query: {
+          orderByChild: 'owner',
+          equalTo: this.name.auth.uid
         }
-      });
+      }).subscribe(teams => this.teams = teams);
+
   }
 
   addTeam(name: string) {
-    const team = {
-      name
-    };
+    const team = {};
+    team['name'] = name;
+    team['owner'] = this.name.auth.uid;
     const teamKey = this.af.database.list(`teams`).push(team).key;
     const userTeam = {};
     userTeam[teamKey] = true;
